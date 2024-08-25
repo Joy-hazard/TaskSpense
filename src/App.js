@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
+import TaskList from './pages/TaskList';
+import ExpenseTracker from './pages/ExpenseTracker';
+import PrivateRoute from './components/PrivateRoute'; // Ensure PrivateRoute is updated for v6
+import NavigationBar from './components/NavigationBar';
+import SFooterF from './components/SFooterF';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavigationBar />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/tasks"
+            element={
+              <PrivateRoute>
+                <TaskList />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/expenses"
+            element={
+              <PrivateRoute>
+                <ExpenseTracker />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </div>
+      <SFooterF />
+    </Router>
   );
 }
 
